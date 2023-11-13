@@ -9,7 +9,7 @@ def stat_char(data):
     median = data.median()
     disp = data.var()
     standart_var = data.std()
-    plt.hist(data, 50)
+    plt.hist(data, 23)
     print("Математическое ожидание: ", mean_var)
     print("Медиана: ", median)
     print("Дисперсия: ", disp)
@@ -19,13 +19,14 @@ def stat_char(data):
 def stat_hip(data):
     mean = data.mean()
     std = data.std()
-    size = data.size
-    norm_data = stat.norm.rvs(loc=mean, scale=std, size=size)
+    size = 100
+    data = np.array(data)
+    data = np.random.choice(data, size, replace=False)
     res_pears = stat.normaltest(data)
-    res_ks = stat.kstest(data, "norm", N=data.size, args=(mean, std))
-    res_shapiro = stat.shapiro(roll_data)
-    res_jb = stat.jarque_bera(roll_data)
-    res_and = stat.anderson(roll_data)
+    res_ks = stat.kstest(data, "norm", N=size, args=(mean, std))
+    res_shapiro = stat.shapiro(data)
+    res_jb = stat.jarque_bera(data)
+    res_and = stat.anderson(data)
     print("Уровни значимости")
     print("Критерий Пирсона: ", res_pears.pvalue)
     print("Критерий Колмогорова: ", res_ks.pvalue)
@@ -34,6 +35,10 @@ def stat_hip(data):
     print("Критерий Андерсона-Дарлинга: ", res_and.statistic)
     print("Критические значения: ", res_and.critical_values)
     print("Уровни значимости: ", res_and.significance_level)
+    norm_data = stat.norm.rvs(loc=mean, scale=std, size=size)
+    plt.figure()
+    plt.hist(data, 15, label="Исходные данные")
+    plt.hist(norm_data, 15, label="Нормальное распределение")
 
 
 
@@ -56,4 +61,8 @@ if __name__ == "__main__":
     plt.ylabel("Количество, чел")
     plt.title("Распределение возраста людей")
     stat_hip(height)
+    plt.xlabel("Рост, см")
+    plt.ylabel("Количество, чел")
+    plt.title("Распределение роста людей")
+    plt.legend()
     plt.show()
