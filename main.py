@@ -25,3 +25,17 @@ if __name__ == "__main__":
     c = 3.0                 # тоже вещественное
     arithmetic_operation(a, b, c)
     calc(c)
+    pi = 0
+    for n in range(0, 1000000, 1):
+        pi += ((-1) ** n) / (2 * n + 1)
+    pi *= 4
+    print(pi)
+    year = int(input())
+    if year % 400 == 0:
+        print("Високосный")
+    elif year % 100 == 0:
+        print("Невисокосный")
+    elif year % 4 == 0:
+        print("Високосный")
+    else:
+        print("Невисокосный")
